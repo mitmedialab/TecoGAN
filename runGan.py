@@ -1,3 +1,4 @@
+%%writefile runGan.py
 '''
 several running examples, run with
 python3 runGan.py 1 # the last number is the run case number
@@ -11,19 +12,24 @@ runcase == ...  coming... data preparation and so on...
 import os, subprocess, sys, datetime, signal, shutil
 
 runcase = int(sys.argv[1])
-userDataInput = sys.argv[2].split(',')
+try:
+    testpre = sys.argv[2].split(',')
+except IndexError:
+    testpre = []
+    print("Warning: For runcases 1 and 3, pass at least one directory for test data, or multiple directories separated by commas")
+
 
 print ("Testing test case %d" % runcase)
 
 def preexec(): # Don't forward signals.
     os.setpgrp()
-    
+
 def mycall(cmd, block=False):
     if not block:
         return subprocess.Popen(cmd)
     else:
         return subprocess.Popen(cmd, preexec_fn = preexec)
-    
+
 def folder_check(path):
     try_num = 1
     oripath = path[:-1] if path.endswith('/') else path
@@ -37,7 +43,7 @@ def folder_check(path):
             path = oripath + "_%d/"%try_num
             try_num += 1
             print(path)
-    
+
     return path
 
 if( runcase == 0 ): # download inference data, trained models
@@ -46,32 +52,33 @@ if( runcase == 0 ): # download inference data, trained models
     cmd1 = "wget https://ge.in.tum.de/download/data/TecoGAN/model.zip -O model/model.zip;"
     cmd1 += "unzip model/model.zip -d model; rm model/model.zip"
     subprocess.call(cmd1, shell=True)
-    
+
     # download some test data
     cmd2 = "wget https://ge.in.tum.de/download/data/TecoGAN/vid3_LR.zip -O LR/vid3.zip;"
     cmd2 += "unzip LR/vid3.zip -d LR; rm LR/vid3.zip"
     subprocess.call(cmd2, shell=True)
-    
+
     cmd2 = "wget https://ge.in.tum.de/download/data/TecoGAN/tos_LR.zip -O LR/tos.zip;"
     cmd2 += "unzip LR/tos.zip -d LR; rm LR/tos.zip"
     subprocess.call(cmd2, shell=True)
-    
+
     # download the ground-truth data
     if(not os.path.exists("./HR/")): os.mkdir("./HR/")
     cmd3 = "wget https://ge.in.tum.de/download/data/TecoGAN/vid4_HR.zip -O HR/vid4.zip;"
     cmd3 += "unzip HR/vid4.zip -d HR; rm HR/vid4.zip"
     subprocess.call(cmd3, shell=True)
-    
+
     cmd3 = "wget https://ge.in.tum.de/download/data/TecoGAN/tos_HR.zip -O HR/tos.zip;"
     cmd3 += "unzip HR/tos.zip -d HR; rm HR/tos.zip"
     subprocess.call(cmd3, shell=True)
-    
-elif( runcase == 1 ): # inference a trained model
-    
-    dirstr = './results/' # the place to save the results
-    testpre = userDataInput # the test cases
 
-    if (not os.path.exists(dirstr)): os.mkdir(dirstr)
+elif( runcase == 1 ): # inference a trained model
+
+    if len(testpre) == 0:
+        print("Error: For runcase 1, pass at least one directory for test data, or multiple directories separated by commas")
+        sys.exit()
+
+    dirstr = './results/' # the place to save the results
 
     # run these test cases one by one:
     for nn in range(len(testpre)):
@@ -94,7 +101,10 @@ elif( runcase == 1 ): # inference a trained model
 
 elif( runcase == 2 ): # calculate all metrics, and save the csv files, should use png
 
-    testpre = ["calendar"] # just put more scenes to evaluate all of them
+    if len(testpre) == 0:
+        print("Error: For runcase 2, pass at least one directory for test data, or multiple directories separated by commas")
+        sys.exit()
+
     dirstr = './results/'  # the outputs
     tarstr = './HR/'       # the GT
 
