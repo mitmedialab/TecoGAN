@@ -1,4 +1,3 @@
-%%writefile runGan.py
 '''
 several running examples, run with
 python3 runGan.py 1 # the last number is the run case number
