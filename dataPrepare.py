@@ -108,7 +108,8 @@ print("Try loading %dx%d."%(try_num, Flags.duration))
              
 ydl = youtube_dl.YoutubeDL( 
     {'format': 'bestvideo/best',
-     'outtmpl': os.path.join(Flags.disk_path, '%(id)s.%(ext)s'),})
+     'outtmpl': os.path.join(Flags.disk_path, '%(id)s.%(ext)s'),
+     'cachedir': False,})
      
 saveframes = not Flags.TEST
 for keys in video_data_dict:
