@@ -279,6 +279,8 @@ elif FLAGS.mode == 'train':
     for key, value in tf.flags.FLAGS.__flags.items():
         print(key, ': ', value)
 
+    print(FLAGS.input_video_dir)
+
     useValidat = tf.placeholder_with_default( tf.constant(False, dtype=tf.bool), shape=() )
     rdata = frvsr_gpu_data_loader(FLAGS, useValidat)
     # Data = collections.namedtuple('Data', 'paths_HR, s_inputs, s_targets, image_count, steps_per_epoch')
