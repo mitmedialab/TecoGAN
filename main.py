@@ -277,7 +277,7 @@ elif FLAGS.mode == 'train':
         shutil.copyfile('./' + filename, FLAGS.summary_dir + filename.replace("/","_"))
 
     for key, value in tf.flags.FLAGS.__flags.items():
-        print(key + ': ' + value)
+        print(key, ': ', value)
 
     useValidat = tf.placeholder_with_default( tf.constant(False, dtype=tf.bool), shape=() )
     rdata = frvsr_gpu_data_loader(FLAGS, useValidat)
