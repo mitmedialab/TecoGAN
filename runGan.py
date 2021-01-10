@@ -15,7 +15,7 @@ try:
     testpre = sys.argv[2].split(',')
 except IndexError:
     testpre = []
-    print("Warning: For runcases 1 and 3, pass at least one directory for test data, or multiple directories separated by commas")
+    print("Warning: For runcases 1 and 2, pass at least one directory for test data, or multiple directories separated by commas")
 
 
 print ("Testing test case %d" % runcase)
@@ -144,7 +144,7 @@ elif( runcase == 3 ): # Train TecoGAN
         cmd0 += "unzip model/ofrvsr.zip -d model; rm model/ofrvsr.zip"
         subprocess.call(cmd0, shell=True)
     
-    TrainingDataPath = "/mnt/netdisk/video_data/" 
+    TrainingDataPath = "mnt/netdisk/video_data/"
     
     '''Prepare Training Folder'''
     # path appendix, manually define it, or use the current datetime, now_str = "mm-dd-hh"
