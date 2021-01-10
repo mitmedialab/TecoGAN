@@ -276,8 +276,8 @@ elif FLAGS.mode == 'train':
     for filename in filelist:
         shutil.copyfile('./' + filename, FLAGS.summary_dir + filename.replace("/","_"))
 
-    for key, value in tf.flags.FLAGS.__flags.items():
-        print(key, ': ', value)
+    for key, value_obj in tf.flags.FLAGS.__flags.items():
+        print(key, ': ', value_obj.value)
 
     print(FLAGS.input_video_dir)
 
