@@ -275,7 +275,9 @@ elif FLAGS.mode == 'train':
     filelist = ['main.py','lib/Teco.py','lib/frvsr.py','lib/dataloader.py','lib/ops.py']
     for filename in filelist:
         shutil.copyfile('./' + filename, FLAGS.summary_dir + filename.replace("/","_"))
-        
+
+    print(FLAGS)
+
     useValidat = tf.placeholder_with_default( tf.constant(False, dtype=tf.bool), shape=() )
     rdata = frvsr_gpu_data_loader(FLAGS, useValidat)
     # Data = collections.namedtuple('Data', 'paths_HR, s_inputs, s_targets, image_count, steps_per_epoch')
