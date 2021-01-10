@@ -86,8 +86,8 @@ elif( runcase == 1 ): # inference a trained model
             "--output_dir",  dirstr,    # Set the place to put the results.
             "--summary_dir", os.path.join(dirstr, 'log/'), # Set the place to put the log.
             "--mode","inference",
-            "--input_dir_LR", os.path.join("./LR/", testpre[nn]),   # the LR directory
-            #"--input_dir_HR", os.path.join("./HR/", testpre[nn]),  # the HR directory
+            #"--input_dir_LR", os.path.join("./LR/", testpre[nn]),   # the LR directory
+            "--input_dir_HR", os.path.join("./HR/", testpre[nn]),  # the HR directory
             # one of (input_dir_HR,input_dir_LR) should be given
             "--output_pre", testpre[nn], # the subfolder to save current scene, optional
             "--num_resblock", "16",  # our model has 16 residual blocks,
@@ -105,8 +105,7 @@ elif( runcase == 2 ): # calculate all metrics, and save the csv files, should us
         sys.exit()
 
     dirstr = './results/'  # the outputs
-    #tarstr = './HR/'       # the GT
-    tarstr = './LR/'
+    tarstr = './HR/'       # the GT
 
     tar_list = [(tarstr+_) for _ in testpre]
     out_list = [(dirstr+_) for _ in testpre]
