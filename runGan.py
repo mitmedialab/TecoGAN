@@ -105,7 +105,8 @@ elif( runcase == 2 ): # calculate all metrics, and save the csv files, should us
         sys.exit()
 
     dirstr = './results/'  # the outputs
-    tarstr = './HR/'       # the GT
+    #tarstr = './HR/'       # the GT
+    tarstr = './LR/'
 
     tar_list = [(tarstr+_) for _ in testpre]
     out_list = [(dirstr+_) for _ in testpre]
